@@ -17,7 +17,11 @@ THIS PLUGIN IS ONLY HERE TO MAKE THE CLASS FILE THAT INSTALLS WITH IT AVAILABLE 
 
 // Get Custom values with key "Expansion"
 
-function bms_get_post_meta($post_id, $key) {
+function bmssm_get($key, $post_id=false) {
+   if (!$post_id) {
+	  GLOBAL $post;
+	  $post_id = $post->ID;
+   }
    global $wpdb;
    $sql = "SELECT m.meta_value FROM wp_postmeta m where m.meta_key = '$key' and m.post_id = '$post_id' order by m.meta_id";
    $results = $wpdb->get_results( $sql );
@@ -26,6 +30,9 @@ function bms_get_post_meta($post_id, $key) {
    {
       $return[] = $result->meta_value;
       // Use value here
+   }
+   if (count($return) == 1) {
+		$return =  $return[0];
    }
    return $return;
 }
