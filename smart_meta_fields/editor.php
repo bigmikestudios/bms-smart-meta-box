@@ -1,3 +1,4 @@
+
 <div style="background: #fff">
 <textarea name="<?php echo $id?>" id="<?php echo $id?>" rows="20" cols="50"><?php echo $value?></textarea>
 </div>
@@ -12,7 +13,7 @@
 			skin:"wp_theme",
 			mode : "none",
 			language : "en",
-			height:"400",
+			height:"<?php echo $height; ?>",
 			width:"100%",
 			theme_advanced_layout_manager : "SimpleLayout",
 			theme_advanced_toolbar_location : "top",

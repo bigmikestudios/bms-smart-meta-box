@@ -18,23 +18,32 @@ THIS PLUGIN IS ONLY HERE TO MAKE THE CLASS FILE THAT INSTALLS WITH IT AVAILABLE 
 // Get Custom values with key "Expansion"
 
 function bmssm_get($key, $post_id=false) {
-   if (!$post_id) {
+	$prefix = "_smartmeta_"; // same as defined in SmartMetaBox class
+	// append prefix if it's not detected
+	if ( substr($key, 0, strlen($prefix)) != $prefix ) $key = $prefix.$key;
+	if (!$post_id) {
 	  GLOBAL $post;
 	  $post_id = $post->ID;
-   }
-   global $wpdb;
-   $sql = "SELECT m.meta_value FROM wp_postmeta m where m.meta_key = '$key' and m.post_id = '$post_id' order by m.meta_id";
-   $results = $wpdb->get_results( $sql );
-   $return = array();
-   foreach( $results as $result )
-   {
-      $return[] = $result->meta_value;
-      // Use value here
-   }
-   if (count($return) == 1) {
+	}
+	global $wpdb;
+	$sql = "SELECT m.meta_value FROM wp_postmeta m where m.meta_key = '$key' and m.post_id = '$post_id' order by m.meta_id";
+	$results = $wpdb->get_results( $sql );
+	$return = array();
+	foreach( $results as $result )
+	{
+	  $return[] = $result->meta_value;
+	  // Use value here
+	}
+	// if there's no result, return an empty string.
+	if (count($return) == 0) {
+		return '';
+	}
+	// if there's only one result, return that value.
+	if (count($return) == 1) {
 		$return =  $return[0];
-   }
-   return $return;
+	}
+	
+	return $return;
 }
    
 ?>
