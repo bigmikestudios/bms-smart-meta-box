@@ -8,7 +8,8 @@ $options_left = array();
 $options_right = array();
 
 // get_current_selection
-$current_selection = bms_get_post_meta($post->ID, $id);
+$current_selection = bmssm_get($id, $post->ID );
+if (empty($current_selection)) $current_selection = array();
 
 // get posts
 $args = array(
