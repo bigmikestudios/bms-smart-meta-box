@@ -12,10 +12,15 @@ $current_selection = bmssm_get($id, $post->ID );
 if (empty($current_selection)) $current_selection = array();
 
 // get posts
-$args = array(
-	'post_type'=>$post_type,
-	'numberposts'=>999	,
-);
+$my_args = array(
+		'post_type'=>$post_type,
+		'numberposts'=>999,);
+if (isset($args)) {
+	$args = array_merge($my_args, $args);
+} else {
+	$args = $my_args;
+}
+
 $my_posts = get_posts($args);
 
 // populate arrays
