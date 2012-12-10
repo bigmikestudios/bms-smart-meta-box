@@ -15,8 +15,6 @@ Author URI: http://bigmikestudios.com
 THIS PLUGIN IS ONLY HERE TO MAKE THE CLASS FILE THAT INSTALLS WITH IT AVAILABLE TO OTHER PLUGINS.
 */
 
-// Get Custom values with key "Expansion"
-
 function bmssm_get($key, $post_id=false) {
 	$prefix = "_smartmeta_"; // same as defined in SmartMetaBox class
 	// append prefix if it's not detected
