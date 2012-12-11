@@ -27,15 +27,15 @@ $my_posts = get_posts($args);
 
 // populate arrays
 foreach($my_posts as $my_post) {
-	error_log("======== current_selection is $current_selection");
 	if (!in_array($my_post->ID, $current_selection)) {
 		$options_left[$my_post->ID] = $my_post->post_title;
 	}
 }
 foreach($current_selection as $my_post_id) {
-	// print_r($my_post_id);
-	$my_post = get_post($my_post_id);
-	$options_right[$my_post->ID] = $my_post->post_title;
+	if (is_numeric($my_post_id)) { // don't do anything if it's empty
+		$my_post = get_post($my_post_id);
+		$options_right[$my_post->ID] = $my_post->post_title;
+	}
 }
 ?>
 
@@ -60,20 +60,6 @@ foreach($current_selection as $my_post_id) {
       </tr>
     </table>
   </div>
-
-<!-- 
-<select name="<?php echo $id?>[]" id="<?php echo $id?>" multiple="multiple" size="<?php echo $size?>" style="height: <?php echo $height?>">
-	<?php foreach ($options_left as $opt_value=>$opt_name): ?>
-    	
-		<?php
-		$selected = (in_array($opt_value, $current_selection))? 'selected' : "";
-		?>
-		<option <?php echo $selected ?> value="<?php echo $opt_value?>"><?php echo $opt_name?></option>
-	<?php endforeach ?>
-</select><br />
-
-<a onclick="jQuery('#<?php echo $id?> option').attr('selected', false);">Clear</a>
--->
 
 <?php 
 // only include this once...
