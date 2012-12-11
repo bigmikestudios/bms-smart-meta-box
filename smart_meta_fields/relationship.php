@@ -9,6 +9,8 @@ $options_right = array();
 
 // get_current_selection
 $current_selection = bmssm_get($id, $post->ID );
+if (!is_array($current_selection)) $current_selection = array($current_selection);
+
 if (empty($current_selection)) $current_selection = array();
 
 // get posts
@@ -25,6 +27,7 @@ $my_posts = get_posts($args);
 
 // populate arrays
 foreach($my_posts as $my_post) {
+	error_log("======== current_selection is $current_selection");
 	if (!in_array($my_post->ID, $current_selection)) {
 		$options_left[$my_post->ID] = $my_post->post_title;
 	}

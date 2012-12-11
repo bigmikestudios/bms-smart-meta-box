@@ -55,27 +55,19 @@ class SmartMetaBox {
 			$id = self::$prefix . $id;
 			$value = self::get($field['id']);
 			$values = self::get($field['id'], false);
-			$values = $values[0];
 			
-			echo ($field['id']. " has ".count($values)." values. <br >");
-			
-			// display the first..
-			
-			if (count($values) > 0) {
-				if (count($values) == 1) $values = array($values);
-				foreach($values as $value) {
-					echo ($field['id']. " value is $value.<br>");
-					if (empty($value) && !sizeof(self::get($field['id'], false))) {
-						$value = isset($field['default']) ? $default : '';
-					}
-					echo '<tr>', '<th style="width:20%">values loop: <label for="', $id, '">', $name, '</label></th>', '<td>';
-					include "smart_meta_fields/$type.php";
-					if (isset($desc)) {
-						echo '&nbsp;<span class="description">' . $desc . '</span>';
-					}
-					echo '</td></tr>';
+			foreach($values as $value) {
+				
+				if (empty($value) && !sizeof(self::get($field['id'], false))) {
+					$value = isset($field['default']) ? $default : '';
 				}
-			} 
+				echo '<tr>', '<th style="width:20%">values loop: <label for="', $id, '">', $name, '</label></th>', '<td>';
+				include "smart_meta_fields/$type.php";
+				if (isset($desc)) {
+					echo '&nbsp;<span class="description">' . $desc . '</span>';
+				}
+				echo '</td></tr>';
+			}
 			
 			if ( ($field['multiple'] == true ) or (empty($value) && !sizeof(self::get($field['id'], false))) ) {
 				// we can have multiples, so add another blank one to fill.
@@ -141,17 +133,17 @@ class SmartMetaBox {
 				$new = $_POST[$name];
 				if (isset($_POST[$name]) || isset($_FILES[$name])) {
 					if ($field['multiple'] == true) {
-						// delete the key
+						// error_log(print_r($_POST[$name], true));
 						delete_post_meta($post_id, $name);
-						// foreach value, save it if it isn't blank.
-						foreach($_POST[$name] as $value) {
-							if (strlen(trim($value) > 0)) {
-								self::set($field['id'], $new, $post_id, $sanitize_callback);
+						error_log("post_id is $post_id and name is $name");
+						if (is_array($_POST[$name])) {
+							foreach($_POST[$name] as $value) {
+								if (strlen(trim($value)) > 0) {
+									//$my_post = get_post($value);
+									error_log($post_id . " v: [".$value."]");
+									add_post_meta($post_id, $name, $value);
+								}
 							}
-						}
-					} else {
-						if ($new != $old) {
-							self::set($field['id'], $new, $post_id, $sanitize_callback);
 						}
 					}
 				} elseif ($field['type'] == 'checkbox') {
