@@ -56,6 +56,10 @@ class SmartMetaBox {
 			$value = self::get($field['id']);
 			$values = self::get($field['id'], false);
 			
+			error_log("=================================");
+			error_log($field['id']);
+			error_log(print_r($values, true));
+			
 			$i = 0;
 			foreach($values as $value) {
 				// if it's a relationship, we only do this once.
@@ -95,7 +99,7 @@ class SmartMetaBox {
 	// Save data from meta box
 	
 	public function save($post_id) {
-
+		
 		// verify nonce
 		if (!isset($_POST[$this->id . '_meta_box_nonce']) || !wp_verify_nonce($_POST[$this->id . '_meta_box_nonce'], 'smartmetabox' . $this->id)) {
 			return $post_id;
@@ -120,7 +124,7 @@ class SmartMetaBox {
 			$sanitize_callback = (isset($field['sanitize_callback'])) ? $field['sanitize_callback'] : '';
 			// special case for relationships
 			if ($field['type'] == 'relationship') {
-				delete_post_meta($post_id, $name);
+				self::delete($field['id']);
 				if (is_array($_POST[$name])) {
 					foreach($_POST[$name] as $value) {
 						$my_post = get_post($value);
@@ -141,7 +145,7 @@ class SmartMetaBox {
 				$new = $_POST[$name];
 				if (isset($_POST[$name]) || isset($_FILES[$name])) {
 					if ($field['multiple'] == true) {
-						delete_post_meta($post_id, $name);
+						self::delete($field['id']);
 						if (is_array($_POST[$name])) {
 							foreach($_POST[$name] as $value) {
 								if (strlen(trim($value)) > 0) {
@@ -149,6 +153,8 @@ class SmartMetaBox {
 								}
 							}
 						}
+					} else {
+						self::set($field['id'], $new, $post_id, $sanitize_callback);
 					}
 				} elseif ($field['type'] == 'checkbox') {
 					self::set($field['id'], 'false', $post_id, $sanitize_callback);
