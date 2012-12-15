@@ -56,9 +56,9 @@ class SmartMetaBox {
 			$value = self::get($field['id']);
 			$values = self::get($field['id'], false);
 			
-			error_log("=================================");
-			error_log($field['id']);
-			error_log(print_r($values, true));
+			// error_log("=================================");
+			// error_log($field['id']);
+			// error_log(print_r($values, true));
 			
 			$i = 0;
 			foreach($values as $value) {

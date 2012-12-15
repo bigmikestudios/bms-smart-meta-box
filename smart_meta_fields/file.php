@@ -12,7 +12,7 @@ $my_thumbnail = wp_get_attachment_image($my_post->ID, 'thumbnail')
 <input type="button" name="<?php echo $id?>-media-button" id="<?php echo $id?>-media-button" value="media picker" class="media-button"  rel="<?php echo $id?>" 		
 	onClick="javascript: 	smb_file_field = '#<?php echo $id?>';
     						smb_file_label = '#smb-file-label-<?php echo $id?>';
-							tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true');
+							tb_show('', 'media-upload.php?type=image&amp;TB_iframe=true&show_media_picker_link=true');
                             return false;"/>
 
 <input type="button" name="<?php echo $id?>-clear-media-button" id="<?php echo $id?>-clear-media-button"  value="clear" rel="<?php echo $id?>-clear" 
