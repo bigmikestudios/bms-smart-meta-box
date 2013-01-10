@@ -16,6 +16,7 @@ if (empty($current_selection)) $current_selection = array();
 // get posts
 $my_args = array(
 		'post_type'=>$post_type,
+		'post_mime_type' => $post_mime_type,
 		'numberposts'=>999,);
 if (isset($args)) {
 	$args = array_merge($my_args, $args);
@@ -24,34 +25,52 @@ if (isset($args)) {
 }
 
 $my_posts = get_posts($args);
+unset($args);
 
 // populate arrays
 foreach($my_posts as $my_post) {
 	if (!in_array($my_post->ID, $current_selection)) {
-		$options_left[$my_post->ID] = $my_post->post_title;
+		$options_left[] = $my_post;
 	}
 }
 foreach($current_selection as $my_post_id) {
 	if (is_numeric($my_post_id)) { // don't do anything if it's empty
 		$my_post = get_post($my_post_id);
-		$options_right[$my_post->ID] = $my_post->post_title;
+		$options_right[] = $my_post;
 	}
 }
 ?>
 
 <div class="bms-selectable">
+    <?php if ($post_mime_type == "image"): ?><div class="preview" style="width: 150px;"> </div><?php endif; ?>
     <table>
       <tr>
         <td><select multiple="multiple" class="bms-selectable-left" style="width: <?php echo $width?>; height: <?php echo $height?>">
-            <?php foreach ($options_left as $opt_value=>$opt_name): ?>
-                <option <?php echo $selected ?> value="<?php echo $opt_value?>"><?php echo $opt_name?></option>
+            <?php foreach ($options_left as $my_post): ?>
+				<?php
+					$rel = "";
+					if ($post_mime_type == "image") {
+						$thumb = wp_get_attachment_image_src($my_post->ID, 'full' );
+						$thumb[3] = $my_post->post_title;
+						$rel = 'rel="'.urlencode(json_encode($thumb)).'"';
+					}
+				?>
+                <option <?php echo $selected ?> <?php echo $rel ?> value="<?php echo $my_post->ID?>"><?php echo $my_post->post_title?></option>
             <?php endforeach ?>
           </select></td>
         <td><input type="button" value="&larr;" class="bms-selectable-rtl" />
           <input type="button" value="&rarr;" class="bms-selectable-ltr" /></td>
         <td><select multiple="multiple" class="bms-selectable-right" style="width: <?php echo $width?>; height: <?php echo $height?>"  name="<?php echo $id?>[]" id="<?php echo $id?>">
-            <?php foreach ($options_right as $opt_value=>$opt_name): ?>
-                <option <?php echo $selected ?> value="<?php echo $opt_value?>"><?php echo $opt_name?></option>
+            <?php foreach ($options_right as $my_post): ?>
+            	<?php
+					$rel = "";
+					if ($post_mime_type == "image") {
+						$thumb = wp_get_attachment_image_src($my_post->ID, 'full' );
+						$thumb[] = $my_post->title;
+						$rel = 'rel="'.urlencode(json_encode($thumb)).'"';
+					}
+				?>
+                <option <?php echo $selected ?> <?php echo $rel ?> value="<?php echo $my_post->ID?>"><?php echo $my_post->post_title?></option>
             <?php endforeach ?>
           </select></td>
         <td><input type="button" value="&uarr;" class="bms-selectable-up" />
@@ -116,7 +135,21 @@ jQuery(document).ready(function() {
 			}
 		});
 	});
+	jQuery("body").on("mouseover", ".bms-selectable option", function(event) {
+		var src = jQuery(this).attr('rel');
+		src = decodeURIComponent(src);
+		src = jQuery.parseJSON(src);
+		var title = jQuery(this).html();
+		var preview = jQuery(this).closest('.bms-selectable').closest('tr').find('.preview');
+		preview.show();
+		preview.html('<strong>'+title+'</strong><br/>'+src[1]+'x'+src[2]+'px<br/><img src="'+src[0]+'" width="100" height="auto"/>');
+	});
+	jQuery("body").on("mouseout", ".bms-selectable option", function(event) {
+		var preview = jQuery(this).closest('.bms-selectable').closest('tr').find('.preview');
+		preview.hide();
+	});
 });
 </script>
 <?php endif; ?>
+
 

@@ -51,14 +51,11 @@ class SmartMetaBox {
 		echo '<input type="hidden" name="' . $this->id . '_meta_box_nonce" value="', wp_create_nonce('smartmetabox' . $this->id) , '" />';
 		echo '<table class="form-table">';
 		foreach ($this->meta_box['fields'] as $field) {
+			
 			extract($field);
 			$id = self::$prefix . $id;
 			$value = self::get($field['id']);
 			$values = self::get($field['id'], false);
-			
-			// error_log("=================================");
-			// error_log($field['id']);
-			// error_log(print_r($values, true));
 			
 			$i = 0;
 			foreach($values as $value) {
@@ -91,9 +88,12 @@ class SmartMetaBox {
 				}
 				echo '</td></tr>';
 			}
-			
+				
+			// unset extracted fields...
+			foreach($field as $key=>$value) { unset($$key);	}
 		}
 		echo '</table>';
+		
 	}
 
 	// Save data from meta box

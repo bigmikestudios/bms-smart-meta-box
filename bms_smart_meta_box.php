@@ -17,7 +17,7 @@ THIS PLUGIN IS ONLY HERE TO MAKE THE CLASS FILE THAT INSTALLS WITH IT AVAILABLE 
 
 function bmssm_get($key, $post_id=false) {
 	$prefix = "_smartmeta_"; // same as defined in SmartMetaBox class
-	// append prefix if it's not detected
+	// prepend prefix if it's not detected
 	if ( substr($key, 0, strlen($prefix)) != $prefix ) $key = $prefix.$key;
 	if (!$post_id) {
 	  GLOBAL $post;
