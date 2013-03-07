@@ -2,7 +2,7 @@
 
 
 if (!isset($height)) $height = "200px";
-if (!isset($width)) $width = "200px";
+if (!isset($width)) $width = "100%";
 
 $options_left = array();
 $options_right = array();
@@ -42,10 +42,10 @@ foreach($current_selection as $my_post_id) {
 ?>
 
 <div class="bms-selectable">
-    <?php if ($post_mime_type == "image"): ?><div class="preview" style="width: 150px;"> </div><?php endif; ?>
-    <table>
+    
+    <table style="width:100%;">
       <tr>
-        <td><select multiple="multiple" class="bms-selectable-left" style="width: <?php echo $width?>; height: <?php echo $height?>">
+        <td style="width:40%;"><select multiple="multiple" class="bms-selectable-left" style="width: <?php echo $width?>; height: <?php echo $height?>">
             <?php foreach ($options_left as $my_post): ?>
 				<?php
 					$rel = "";
@@ -58,9 +58,9 @@ foreach($current_selection as $my_post_id) {
                 <option <?php echo $selected ?> <?php echo $rel ?> value="<?php echo $my_post->ID?>"><?php echo $my_post->post_title?></option>
             <?php endforeach ?>
           </select></td>
-        <td><input type="button" value="&larr;" class="bms-selectable-rtl" />
+        <td style="width:4%;"><input type="button" value="&larr;" class="bms-selectable-rtl" />
           <input type="button" value="&rarr;" class="bms-selectable-ltr" /></td>
-        <td><select multiple="multiple" class="bms-selectable-right" style="width: <?php echo $width?>; height: <?php echo $height?>"  name="<?php echo $id?>[]" id="<?php echo $id?>">
+        <td style="width:40%;"><select multiple="multiple" class="bms-selectable-right" style="width: <?php echo $width?>; height: <?php echo $height?>"  name="<?php echo $id?>[]" id="<?php echo $id?>">
             <?php foreach ($options_right as $my_post): ?>
             	<?php
 					$rel = "";
@@ -73,10 +73,17 @@ foreach($current_selection as $my_post_id) {
                 <option <?php echo $selected ?> <?php echo $rel ?> value="<?php echo $my_post->ID?>"><?php echo $my_post->post_title?></option>
             <?php endforeach ?>
           </select></td>
-        <td><input type="button" value="&uarr;" class="bms-selectable-up" />
+        <td style="width:4%;"><input type="button" value="&uarr;" class="bms-selectable-up" />
           <br />
           <input type="button" value="&darr;" class="bms-selectable-down" /></td>
       </tr>
+      <?php if ($post_mime_type == "image"): ?>
+      <tr>
+      <td colspan="4">
+      <div class="preview"> </div>
+      </td>
+      </tr>
+	  <?php endif; ?>
     </table>
   </div>
 
@@ -142,7 +149,7 @@ jQuery(document).ready(function() {
 		var title = jQuery(this).html();
 		var preview = jQuery(this).closest('.bms-selectable').closest('tr').find('.preview');
 		preview.show();
-		preview.html('<strong>'+title+'</strong><br/>'+src[1]+'x'+src[2]+'px<br/><img src="'+src[0]+'" width="100" height="auto"/>');
+		preview.html('<strong>'+title+'</strong><br/>'+src[1]+'x'+src[2]+'px<br/><img src="'+src[0]+'" width="100%" height="auto"/>');
 	});
 	jQuery("body").on("mouseout", ".bms-selectable option", function(event) {
 		var preview = jQuery(this).closest('.bms-selectable').closest('tr').find('.preview');
