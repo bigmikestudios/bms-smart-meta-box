@@ -5,7 +5,7 @@
  *
  * Support input types: text, textarea, checkbox, select, radio
  *
- * @author: Nikolay Yordanov <me@nyordanov.com> http://nyordanov.com
+ * @author: Mike Lathrop, forked from original by Nikolay Yordanov <me@nyordanov.com> http://nyordanov.com
  * @version: 1.0
  *
  */
@@ -33,13 +33,19 @@ class SmartMetaBox {
 		));
 	}
 
-	// Add meta box for multiple post types
+	// Add meta box for multiple post types or templates
 	
 	public function add() {
+		$post_id = $_GET['post'] ? $_GET['post'] : $_POST['post_ID'] ;
+		$template_file = get_post_meta($post_id,'_wp_page_template',TRUE);
+		
 		foreach ($this->meta_box['pages'] as $page) {
-			add_meta_box($this->id, $this->meta_box['title'], array(&$this,
-				'show'
-			) , $page, $this->meta_box['context'], $this->meta_box['priority']);
+			// if template is unset, or this post uses the template...
+			if ( !($this->meta_box['template']) or (in_array($template_file, $this->meta_box['template'])) ) {
+					add_meta_box($this->id, $this->meta_box['title'], array(&$this,
+					'show'
+				) , $page, $this->meta_box['context'], $this->meta_box['priority']);
+			}
 		}
 	}
 
