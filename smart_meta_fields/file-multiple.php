@@ -4,7 +4,7 @@ $my_post = get_post($value);
 $my_title = ($my_post->ID == $post->ID) ? "" : $my_post->post_title;
 $my_thumbnail = wp_get_attachment_image($my_post->ID, 'thumbnail')
 ?>
-<input type="hidden" name="<?php echo $id?>[]" id="<?php echo $id?>" value="<?php echo $value?>" class="file-field" />
+<input type="hidden" name="<?php echo $id?>[]" id="<?php echo $id?>" value="<?php echo $value?>" class="<?php echo $id?>" />
 <div id="smb-file-label-<?php echo $id?>">
 	<div><?php echo $my_thumbnail?></div>
 	<div><?php echo $my_title?></div>
@@ -19,3 +19,5 @@ $my_thumbnail = wp_get_attachment_image($my_post->ID, 'thumbnail')
 	onClick="javascript: 	jQuery('#smb-file-label-<?php echo $id?>').html('');
     						jQuery('#<?php echo $id?>').val('');
     						return false" />
+                            
+                            asdfdsaf

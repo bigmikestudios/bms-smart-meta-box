@@ -57,9 +57,9 @@ class SmartMetaBox {
 		echo '<input type="hidden" name="' . $this->id . '_meta_box_nonce" value="', wp_create_nonce('smartmetabox' . $this->id) , '" />';
 		echo '<table class="form-table">';
 		foreach ($this->meta_box['fields'] as $field) {
-			
 			extract($field);
 			$id = self::$prefix . $id;
+			$prefix = self::$prefix;
 			$value = self::get($field['id']);
 			$values = self::get($field['id'], false);
 			
