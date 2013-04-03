@@ -36,6 +36,13 @@ if (is_admin()) {
 		'priority'  => 'high',
 		'fields'    => array(
 			array(
+				'name' => 'Attached Image(s)',
+				'id' => 'smp_attached_images',
+				'type' => 'attached-images',
+				'desc' => 'this field just shows the attached images'
+			),
+			
+			array(
 				'name' => 'Text',
 				'id' => 'smb_text',
 				'default' => 'default',
@@ -63,6 +70,16 @@ if (is_admin()) {
 				'desc' => 'Description',
 				'type' => 'checkbox',
 			),
+			array(
+				'name' => 'Checkbox Group',
+				'id' => 'smb_chekbox_group',
+				'type' => 'checkbox-group',
+				'options' => array(
+					'This',
+					'That',
+					'The Other',
+					)
+			),	
 			array(
 				'name' => 'Select',
 				'id' => 'smb_select',

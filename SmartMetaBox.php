@@ -65,11 +65,12 @@ class SmartMetaBox {
 			
 			$i = 0;
 			foreach($values as $value) {
-				// if it's a relationship, we only do this once.
+				// if it's a relationship or checkbox-group, we only do this once.
+				$only_once = ( in_array($field['type'], array('relationship', 'checkbox-group')) )? true : false;
 				if ( 
-				      ( ($field['type'] == 'relationship') && ($i++ == 0) ) 
+				      ( $only_once && ($i++ == 0) ) 
 					or 
-					  ( $field['type'] != 'relationship')
+					  !($only_once)
 					) {
 						
 					if (empty($value) && !sizeof(self::get($field['id'], false))) {
@@ -146,10 +147,20 @@ class SmartMetaBox {
 						if ($add) add_post_meta($post_id, $name, $value);
 					}
 				}
+			} elseif ($field['type'] == 'checkbox-group') {
+				self::delete($field['id']);
+				if (is_array($_POST[$name])) {
+					foreach($_POST[$name] as $value) {
+						if (strlen(trim($value)) > 0) {
+							add_post_meta($post_id, $name, $value);
+						}
+					}
+				}
 			} else {
 				$old = self::get($field['id'], true, $post_id);
 				$new = $_POST[$name];
 				if (isset($_POST[$name]) || isset($_FILES[$name])) {
+					
 					if ($field['multiple'] == true) {
 						self::delete($field['id']);
 						if (is_array($_POST[$name])) {
