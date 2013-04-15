@@ -1,5 +1,5 @@
 <?php $add_id = $prefix.$add_id; ?>
-<input type="button" class="add-field-<?php echo $add_id?>" data-add_id="<?php echo $add_id?>" value="Submit" />
+<input type="button" class="add-field-<?php echo $add_id?>" data-add_id="<?php echo $add_id?>" value="Add Another Field" />
 <script>
 jQuery('.add-field-<?php echo $add_id?>').click(function(e) {
     e.preventDefault();

@@ -15,6 +15,13 @@ Author URI: http://bigmikestudios.com
 THIS PLUGIN IS ONLY HERE TO MAKE THE CLASS FILE THAT INSTALLS WITH IT AVAILABLE TO OTHER PLUGINS.
 */
 
+function add_ajaxurl_cdata_to_front(){ ?>
+	<script type="text/javascript"> //<![CDATA[
+		ajaxurl = '<?php echo admin_url( 'admin-ajax.php'); ?>';
+	//]]> </script>
+<?php }
+add_action( 'wp_head', 'add_ajaxurl_cdata_to_front', 1);
+
 add_action('wp_ajax_my_action', 'my_action_callback');
 
 // used by the "attached-images" field
