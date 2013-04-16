@@ -92,6 +92,14 @@ if (is_admin()) {
 				)
 			),
 			array(
+				'name' => 'Select Other',
+				'id' => 'smb_select_other',
+				'add_id' => 'smb_select',
+				'desc' => 'Adds and selects a new item to the box above. Really, this is only useful if you populate the options dynamically.',
+				'type' => 'select-other',
+			),
+			
+			array(
 				'name' => 'Radios',
 				'id' => 'smb_radio',
 				'default' => 'second-val',

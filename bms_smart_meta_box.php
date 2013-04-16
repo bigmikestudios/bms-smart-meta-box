@@ -9,6 +9,7 @@
 Plugin Name: BMS Smart Meta Box
 Plugin URI: http://bigmikestudios.com
 Description: Implements the Smart Meta Box class for other plugins
+Depends: bms-smart-meta-box/bms_smart_meta_box.php
 Version: 0.0.1
 Author URI: http://bigmikestudios.com
 
@@ -100,6 +101,7 @@ jQuery(document).ready(function($) {
 <?php
 }
 
+
 //gets the key value by key name, with or without the prefix.
 function bmssm_get($key, $post_id=false) {
 	$prefix = "_smartmeta_"; // same as defined in SmartMetaBox class
@@ -128,6 +130,32 @@ function bmssm_get($key, $post_id=false) {
 	}
 	
 	return $return;
+}
+
+// useful for select lists with the "other" field added.
+function bmssm_get_unique_values($key, $post_type = false) {
+	$prefix = "_smartmeta_"; // same as defined in SmartMetaBox class
+	// prepend prefix if it's not detected
+	if ( substr($key, 0, strlen($prefix)) != $prefix ) $key = $prefix.$key;
+	// here we go, get all posts with the key...
+	$args = array(
+		'posts_per_page' => -1,
+		array( 
+			'meta_key' => $key,
+			'value' => '',
+			'compare' => '<>'
+		)
+	);
+	if ($post_type) $args['post_type'] = $post_type;
+	$my_posts = get_posts($args);
+	$values = array();
+	foreach($my_posts as $my_post) {
+		$my_val = bmssm_get($key, $my_post->ID);
+		$values[] = $my_val;
+	}
+	$values = array_unique($values);
+	arsort($values);
+	return $values;
 }
    
 ?>
