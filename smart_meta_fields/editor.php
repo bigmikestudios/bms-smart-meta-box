@@ -1,4 +1,5 @@
-
+<?php wp_editor( $value, $id ); ?>
+<?php /*
 <div style="background: #fff">
 <textarea name="<?php echo $id?>" id="<?php echo $id?>" rows="20" cols="50"><?php echo $value?></textarea>
 </div>
@@ -28,3 +29,4 @@
 		}
 	});
 </script>
+*/ ?>
