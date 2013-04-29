@@ -5,14 +5,9 @@
 jQuery('.add-field-<?php echo $add_id?>').click(function(e) {
     e.preventDefault();
 	var my_add_select = '#'+jQuery(this).data('add_id');
-	console.log (my_add_select);
 	var my_val = jQuery('#<?php echo $id; ?>').val();
-	console.log (my_val);
-	console.log (jQuery(my_add_select).html());
-	
-	jQuery(my_add_select).prepend('<option selected value='+my_val+'>'+my_val+'</option>');
-	// console.log(my_add_field);
-	
-	
+	jQuery(my_add_select).html();
+	jQuery(my_add_select).prepend('<option selected value="'+my_val+'">'+my_val+'</option>');
+	jQuery(my_add_select).val(my_val);
 });
 </script>

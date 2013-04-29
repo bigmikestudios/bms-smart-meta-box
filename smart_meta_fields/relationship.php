@@ -142,6 +142,20 @@ jQuery(document).ready(function() {
 			}
 		});
 	});
+	jQuery("body").on("click", ".bms-selectable select", function(event) {
+		if (jQuery(this).find(":selected").length == 1) {
+		var my_selected = jQuery(this).find("option:selected");
+		
+		var src = my_selected.attr('rel');
+		src = decodeURIComponent(src);
+		src = jQuery.parseJSON(src);
+		var title = my_selected.html();
+		var preview = jQuery(this).closest('.bms-selectable').closest('tr').find('.preview');
+		preview.show();
+		preview.html('<strong>'+title+'</strong><br/>'+src[1]+'x'+src[2]+'px<br/><img src="'+src[0]+'" style="width: 100%; height: auto"/>');
+		}
+	});
+	/*
 	jQuery("body").on("mouseover", ".bms-selectable option", function(event) {
 		var src = jQuery(this).attr('rel');
 		src = decodeURIComponent(src);
@@ -151,7 +165,8 @@ jQuery(document).ready(function() {
 		preview.show();
 		preview.html('<strong>'+title+'</strong><br/>'+src[1]+'x'+src[2]+'px<br/><img src="'+src[0]+'" width="100%" height="auto"/>');
 	});
-	jQuery("body").on("mouseout", ".bms-selectable option", function(event) {
+	*/
+	jQuery("body").on("mouseout", ".bms-selectable", function(event) {
 		var preview = jQuery(this).closest('.bms-selectable').closest('tr').find('.preview');
 		preview.hide();
 	});

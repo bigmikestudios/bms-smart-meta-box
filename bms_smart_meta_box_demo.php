@@ -7,10 +7,10 @@
 /*
 Plugin Name: BMS Smart Meta Box Demo
 Plugin URI: http://bigmikestudios.com
-Depends: bms-smart-meta-box/bms_smart_meta_box.php
+Depends: bms-smart-meta-box/bms_smart_meta_box.php, attachments/index.php
 Description: Demonstrates the use of the BMS Smart Meta Box plugin
 Version: 0.0.1
-Author URI: http://bigmikestudios.com
+Author URI: http://bigmikestudios.com/
 */
 
 
@@ -121,4 +121,6 @@ if (is_admin()) {
 		)
 	));
 }
+
+
 ?>

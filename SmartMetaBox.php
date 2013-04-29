@@ -55,7 +55,7 @@ class SmartMetaBox {
 
 		// Use nonce for verification
 		echo '<input type="hidden" name="' . $this->id . '_meta_box_nonce" value="', wp_create_nonce('smartmetabox' . $this->id) , '" />';
-		echo '<table class="form-table">';
+		echo '<table class="form-table smb-form-table">';
 		foreach ($this->meta_box['fields'] as $field) {
 			extract($field);
 			$id = self::$prefix . $id;
