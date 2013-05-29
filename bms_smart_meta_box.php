@@ -9,7 +9,6 @@
 Plugin Name: BMS Smart Meta Box
 Plugin URI: http://bigmikestudios.com
 Description: Implements the Smart Meta Box class for other plugins
-Depends: bms-smart-meta-box/bms_smart_meta_box.php
 Version: 0.0.1
 Author URI: http://bigmikestudios.com
 
