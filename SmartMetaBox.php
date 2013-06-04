@@ -44,11 +44,6 @@ class SmartMetaBox {
 				
 		foreach ($this->meta_box['pages'] as $page) {
 			// if template is unset, or this post uses the template...
-<<<<<<< HEAD
-			$this->meta_box['template'] = (isset($this->meta_box['template'])) ? $this->meta_box['template'] : NULL;
-			if ( !($this->meta_box['template']) or (in_array($template_file, $this->meta_box['template'])) ) {
-					add_meta_box($this->id, $this->meta_box['title'], array(&$this,
-=======
 			if (isset($this->meta_box['template'])) {
 				if ( (in_array($template_file, $this->meta_box['template'])) or in_array($special_page, $this->meta_box['template']) ) {
 						add_meta_box($this->id, $this->meta_box['title'], array(&$this,
@@ -57,7 +52,6 @@ class SmartMetaBox {
 				}
 			} else {
 				add_meta_box($this->id, $this->meta_box['title'], array(&$this,
->>>>>>> origin/Proulx
 					'show'
 				) , $page, $this->meta_box['context'], $this->meta_box['priority']);
 			}
@@ -99,14 +93,8 @@ class SmartMetaBox {
 					echo '</td></tr>';
 				}
 			}
-<<<<<<< HEAD
-			$field['multiple'] = (isset($field['multiple'])) ? $field['multiple'] : NULL;
-			if ( ($field['multiple'] == true ) or (empty($value) && !sizeof(self::get($field['id'], false))) ) {
-=======
-			
-			$my_multiple = (isset($field['multiple'])) ? $field['multiple'] : null;
+			$my_multiple = (isset($field['multiple'])) ? $field['multiple'] : NULL;
 			if ( ($my_multiple == true ) or (empty($value) && !sizeof(self::get($field['id'], false))) ) {
->>>>>>> origin/Proulx
 				// we can have multiples, so add another blank one to fill.
 				$value = isset($field['default']) ? $default : '';
 				echo '<tr>', '<th style="width:20%"><label for="', $id, '">', $name, '</label></th>', '<td>';
