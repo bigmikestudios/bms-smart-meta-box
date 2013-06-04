@@ -41,6 +41,7 @@ class SmartMetaBox {
 		
 		foreach ($this->meta_box['pages'] as $page) {
 			// if template is unset, or this post uses the template...
+			$this->meta_box['template'] = (isset($this->meta_box['template'])) ? $this->meta_box['template'] : NULL;
 			if ( !($this->meta_box['template']) or (in_array($template_file, $this->meta_box['template'])) ) {
 					add_meta_box($this->id, $this->meta_box['title'], array(&$this,
 					'show'
@@ -84,7 +85,7 @@ class SmartMetaBox {
 					echo '</td></tr>';
 				}
 			}
-			
+			$field['multiple'] = (isset($field['multiple'])) ? $field['multiple'] : NULL;
 			if ( ($field['multiple'] == true ) or (empty($value) && !sizeof(self::get($field['id'], false))) ) {
 				// we can have multiples, so add another blank one to fill.
 				$value = isset($field['default']) ? $default : '';

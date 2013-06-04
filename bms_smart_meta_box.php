@@ -83,7 +83,7 @@ jQuery(document).ready(function($) {
 	function bmssm_update_attached_images() {
 		var data = {
 			action: 'my_action',
-			post_id: <?php echo $post->ID; ?>
+			post_id: <?php if (isset($post)) echo $post->ID; ?>
 		};
 		// since 2.8 ajaxurl is always defined in the admin header and points to admin-ajax.php
 		jQuery.post(ajaxurl, data, function(response) {
