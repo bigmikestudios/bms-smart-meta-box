@@ -76,6 +76,7 @@ add_action('admin_head', 'my_action_javascript');
 
 function my_action_javascript() {
 	global $post;
+	if (isset($post->ID)) {
 ?>
 <script type="text/javascript" >
 jQuery(document).ready(function($) {
@@ -108,6 +109,7 @@ jQuery(document).ready(function($) {
 });
 </script>
 <?php
+}
 }
 
 
