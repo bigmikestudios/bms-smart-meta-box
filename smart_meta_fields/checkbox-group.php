@@ -9,7 +9,7 @@ if (!(is_numeric($columns)) or ($columns < 1)) $columns = 1;
 		$my_table_row = array();
 		for($ii=0;$ii<$columns;$ii++) {
 			$my_index = $i + $items_per_row * $ii;
-			$my_table_row[] = $options[$my_index];
+			$my_table_row[] = (isset($options[$my_index])) ? $options[$my_index] : NULL;
 		}
 		$table_array[]=$my_table_row;
 	}

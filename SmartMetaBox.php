@@ -36,7 +36,9 @@ class SmartMetaBox {
 	// Add meta box for multiple post types or templates
 	
 	public function add() {
-		$post_id = $_GET['post'] ? $_GET['post'] : $_POST['post_ID'] ;
+		if (isset($_POST['post'])) $post_id = $_POST['post'];
+		if (isset($_GET['post'])) $post_id = $_GET['post'];
+		if (!(isset($post_id))) $post_id = NULL;
 		$template_file = get_post_meta($post_id,'_wp_page_template',TRUE);
 		$special_page = '';
 		if ($post_id == get_option('page_on_front')) $special_page = "front-page";
@@ -169,7 +171,7 @@ class SmartMetaBox {
 				$old = self::get($field['id'], true, $post_id);
 				$new = $_POST[$name];
 				if (isset($_POST[$name]) || isset($_FILES[$name])) {
-					
+					$field['multiple'] = (isset($field['multiple'])) ? $field['multiple'] : NULL;
 					if ($field['multiple'] == true) {
 						self::delete($field['id']);
 						if (is_array($_POST[$name])) {
