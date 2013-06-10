@@ -47,6 +47,7 @@ class SmartMetaBox {
 		foreach ($this->meta_box['pages'] as $page) {
 			// if template is unset, or this post uses the template...
 			if (isset($this->meta_box['template'])) {
+				$this->meta_box['template'] = (is_array($this->meta_box['template'])) ? $this->meta_box['template'] : array($this->meta_box['template']);
 				if ( (in_array($template_file, $this->meta_box['template'])) or in_array($special_page, $this->meta_box['template']) ) {
 						add_meta_box($this->id, $this->meta_box['title'], array(&$this,
 							'show'
@@ -72,7 +73,7 @@ class SmartMetaBox {
 			$id = self::$prefix . $id;
 			$prefix = self::$prefix;
 			$value = self::get($field['id']);
-			$values = self::get($field['id'], false);
+			$values = self::get($field['id'], false);		
 			
 			$i = 0;
 			foreach($values as $value) {
@@ -89,6 +90,18 @@ class SmartMetaBox {
 					}
 					echo '<tr>', '<th style="width:20%"><label for="', $id, '">', $name, '</label></th>', '<td>';
 					include "smart_meta_fields/$type.php";
+					if (isset($validate)) {
+						switch($validate) {
+							case ('numeric') :
+								if (!is_numeric($value)) { ?>
+<div class='error'>
+	<p><strong>[<?php echo $name; ?>]</strong> field is not formatted as a number. Please include digits and decimal only.</p>
+</div>
+								<?php }
+							break;
+						}
+                        
+					}
 					if (isset($desc)) {
 						echo '&nbsp;<span class="description">' . $desc . '</span>';
 					}
@@ -110,8 +123,7 @@ class SmartMetaBox {
 			// unset extracted fields...
 			foreach($field as $key=>$value) { unset($$key);	}
 		}
-		echo '</table>';
-		
+		echo '</table>';	
 	}
 
 	// Save data from meta box
