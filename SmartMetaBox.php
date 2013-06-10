@@ -91,16 +91,23 @@ class SmartMetaBox {
 					echo '<tr>', '<th style="width:20%"><label for="', $id, '">', $name, '</label></th>', '<td>';
 					include "smart_meta_fields/$type.php";
 					if (isset($validate)) {
-						switch($validate) {
-							case ('numeric') :
-								if (!is_numeric($value)) { ?>
-<div class='error'>
-	<p><strong>[<?php echo $name; ?>]</strong> field is not formatted as a number. Please include digits and decimal only.</p>
-</div>
-								<?php }
-							break;
+						// If it's not required and it's empty, we can skip this whole thing.
+						if ( empty($value) and !in_array('required', $validators) ) {
+							// silence is golden 
+						} else {
+							$validators = (is_array($validate)) ? $validate : array($validate);
+							foreach($validators as $validate) {
+								switch($validate) {
+									case ('numeric') :
+										if (!is_numeric($value)) { ?>
+		<div class='error'>
+			<p><strong>[<?php echo $name; ?>]</strong> field is not formatted as a number. Please include digits and decimal only.</p>
+		</div>
+										<?php }
+									break;
+								}
+							}
 						}
-                        
 					}
 					if (isset($desc)) {
 						echo '&nbsp;<span class="description">' . $desc . '</span>';
@@ -214,6 +221,7 @@ class SmartMetaBox {
 		$id = (isset($post_id)) ? $post_id : $post->ID;
 		$meta_key = self::$prefix . $name;
 		$new = ($sanitize_callback != '' && is_callable($sanitize_callback)) ? call_user_func($sanitize_callback, $new, $meta_key, $id) : $new;
+		$sanitize_callback = '';
 		return update_post_meta($id, $meta_key, $new);
 	}
 	static function delete($name, $post_id = null) {
