@@ -91,20 +91,30 @@ class SmartMetaBox {
 					echo '<tr>', '<th style="width:20%"><label for="', $id, '">', $name, '</label></th>', '<td>';
 					include "smart_meta_fields/$type.php";
 					if (isset($validate)) {
+						$validators = (is_array($validate)) ? $validate : array($validate);
 						// If it's not required and it's empty, we can skip this whole thing.
 						if ( empty($value) and !in_array('required', $validators) ) {
+							echo ('not required and empty.');
 							// silence is golden 
 						} else {
-							$validators = (is_array($validate)) ? $validate : array($validate);
-							foreach($validators as $validate) {
-								switch($validate) {
-									case ('numeric') :
-										if (!is_numeric($value)) { ?>
-		<div class='error'>
-			<p><strong>[<?php echo $name; ?>]</strong> field is not formatted as a number. Please include digits and decimal only.</p>
-		</div>
-										<?php }
-									break;
+							foreach($validators as $validator) {
+								echo ($validator);
+								if ($validator == 'numeric') {
+									if (!is_numeric($value)) { 
+										$alert = "This field is not formatted as a number. Please include digits and decimal only.";
+									}
+								} else if ($validator == "required") {
+									echo ("SUCCESS!");
+									if (trim($value) == '') {
+										$alert = "This field is required.";
+									}
+								}
+								if (isset($alert)) {
+									?>
+<div class='error'>
+<p><strong>[<?php echo $name; ?>]:</strong><?php echo $alert; ?></p>
+</div>								<?php
+                                    unset($alert);
 								}
 							}
 						}
