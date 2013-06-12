@@ -15,6 +15,8 @@ Author URI: http://bigmikestudios.com
 THIS PLUGIN IS ONLY HERE TO MAKE THE CLASS FILE THAT INSTALLS WITH IT AVAILABLE TO OTHER PLUGINS.
 */
 
+
+// Add CSS
 function customAdmin() {
     $url = plugin_dir_url('bms_smart_meta_box.php');
     $url = $url . 'bms-smart-meta-box/wp-admin.css';
@@ -24,7 +26,7 @@ function customAdmin() {
 }
 add_action('admin_head', 'customAdmin');
 
-
+// Add ajaxurl
 function add_ajaxurl_cdata_to_front(){ ?>
 	<script type="text/javascript"> //<![CDATA[
 		ajaxurl = '<?php echo admin_url( 'admin-ajax.php'); ?>';
@@ -32,9 +34,8 @@ function add_ajaxurl_cdata_to_front(){ ?>
 <?php }
 add_action( 'wp_head', 'add_ajaxurl_cdata_to_front', 1);
 
-add_action('wp_ajax_my_action', 'my_action_callback');
-
 // used by the "attached-images" field
+add_action('wp_ajax_my_action', 'my_action_callback');
 function my_action_callback() {
 	global $wpdb; // this is how you get access to the database
 
@@ -112,7 +113,6 @@ jQuery(document).ready(function($) {
 }
 }
 
-
 //gets the key value by key name, with or without the prefix.
 function bmssm_get($key, $post_id=false) {
 	$prefix = "_smartmeta_"; // same as defined in SmartMetaBox class
@@ -167,6 +167,26 @@ function bmssm_get_unique_values($key, $post_type = false) {
 	$values = array_unique($values);
 	arsort($values);
 	return $values;
+}
+
+// Sanitization functions
+
+// sanitize to float {
+function bmssm_make_into_float( $new, $meta_key, $id ) {
+	if (!empty($new)) {
+   		 return floatval( $new );
+	} else {
+		return $new;
+	}
+}
+
+// sanitize to integer {
+function bmssm_make_into_integer( $new, $meta_key, $id ) {
+	if (!empty($new)) {
+   		 return intval( $new );
+	} else {
+		return $new;
+	}
 }
    
 ?>
