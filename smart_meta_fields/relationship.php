@@ -16,8 +16,12 @@ if (empty($current_selection)) $current_selection = array();
 // get posts
 $my_args = array(
 		'post_type'=>$post_type,
-		'post_mime_type' => $post_mime_type,
 		'numberposts'=>999,);
+if (isset($post_mime_type)) {
+	$args['post_mime_type'] = $post_mime_type;
+} else {
+	$post_mime_type=NULL;
+}
 if (isset($args)) {
 	$args = array_merge($my_args, $args);
 } else {
@@ -36,7 +40,7 @@ foreach($my_posts as $my_post) {
 foreach($current_selection as $my_post_id) {
 	if (is_numeric($my_post_id)) { // don't do anything if it's empty
 		$my_post = get_post($my_post_id);
-		$options_right[] = $my_post;
+		if ($my_post) $options_right[] = $my_post;
 	}
 }
 ?>
@@ -55,7 +59,7 @@ foreach($current_selection as $my_post_id) {
 						$rel = 'rel="'.urlencode(json_encode($thumb)).'"';
 					}
 				?>
-                <option <?php echo $selected ?> <?php echo $rel ?> value="<?php echo $my_post->ID?>"><?php echo $my_post->post_title?></option>
+                <option <?php //echo $selected ?> <?php echo $rel ?> value="<?php echo $my_post->ID?>"><?php echo $my_post->post_title?></option>
             <?php endforeach ?>
           </select></td>
         <td style="width:4%;"><input type="button" value="&larr;" class="bms-selectable-rtl" />
@@ -70,7 +74,7 @@ foreach($current_selection as $my_post_id) {
 						$rel = 'rel="'.urlencode(json_encode($thumb)).'"';
 					}
 				?>
-                <option <?php echo $selected ?> <?php echo $rel ?> value="<?php echo $my_post->ID?>"><?php echo $my_post->post_title?></option>
+                <option <?php //echo $selected ?> <?php echo $rel ?> value="<?php echo $my_post->ID?>"><?php echo $my_post->post_title?></option>
             <?php endforeach ?>
           </select></td>
         <td style="width:4%;"><input type="button" value="&uarr;" class="bms-selectable-up" />

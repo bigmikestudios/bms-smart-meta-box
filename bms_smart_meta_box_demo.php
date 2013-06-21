@@ -30,7 +30,7 @@ if (is_admin()) {
 		
 			
 	new SmartMetaBox('demo', array(
-		'title'     => 'BMS Portfolio',
+		'title'     => 'BMS Smart Meta Box Demo',
 		'pages'     => array('page'),
 		'context'   => 'normal',
 		'priority'  => 'high',
