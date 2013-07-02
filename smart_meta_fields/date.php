@@ -1,0 +1,1 @@
+<input type="date" name="<?php echo $id?>" id="<?php echo $id?>" value="<?php echo $value?>" class="text" />

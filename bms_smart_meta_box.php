@@ -16,6 +16,12 @@ THIS PLUGIN IS ONLY HERE TO MAKE THE CLASS FILE THAT INSTALLS WITH IT AVAILABLE 
 */
 
 
+// datepicker stuff... ======================
+// Enqueue Datepicker + jQuery UI CSS
+//wp_enqueue_script( 'jquery-ui-datepicker' );
+//wp_enqueue_style( 'jquery-ui-style', 'http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.1/themes/smoothness/jquery-ui.css', true);
+// ==========================================
+
 // Add CSS
 function customAdmin() {
     $url = plugin_dir_url('bms_smart_meta_box.php');

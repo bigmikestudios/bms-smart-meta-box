@@ -78,7 +78,7 @@ class SmartMetaBox {
 			$i = 0;
 			foreach($values as $value) {
 				// if it's a relationship or checkbox-group, we only do this once.
-				$only_once = ( in_array($field['type'], array('relationship', 'checkbox-group')) )? true : false;
+				$only_once = ( in_array($field['type'], array('relationship', 'checkbox-group', 'display-bold-select-group')) )? true : false;
 				if ( 
 				      ( $only_once && ($i++ == 0) ) 
 					or 
@@ -190,7 +190,7 @@ class SmartMetaBox {
 						if ($add) add_post_meta($post_id, $name, $value);
 					}
 				}
-			} elseif ($field['type'] == 'checkbox-group') {
+			} elseif ($field['type'] == 'checkbox-group' or $field['type'] == 'display-bold-select-group') {
 				self::delete($field['id']);
 				if (is_array($_POST[$name])) {
 					foreach($_POST[$name] as $value) {
